@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>菩提树·待君归</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;700;900&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(135deg, #F8F8F2 0%, #F0F6F6 100%);
+            color: #2C4A52;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 背景装饰元素 */
+        .bg-mountain {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40vh;
+            background: 
+                linear-gradient(to top, rgba(232,238,230,0.7) 0%, transparent 100%),
+                url("data:image/svg+xml,%3Csvg width='1200' height='400' viewBox='0 0 1200 400' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 400L200 280L400 320L600 240L800 200L1000 160L1200 120L1200 400L0 400Z' fill='%23E8EEE6' fill-opacity='0.4'/%3E%3C/svg%3E") bottom center repeat-x;
+            background-size: cover;
+            z-index: 0;
+            opacity: 0.8;
+        }
+        
+        .floating-leaves {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .leaf {
+            position: absolute;
+            background-color: #5F8A6E;
+            opacity: 0.2;
+            border-radius: 0 100%;
+            animation: float 25s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* 主体容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* 顶部标题区域 */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-top: 2rem;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #5F8A6E, transparent);
+        }
+        
+        .site-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 4.2rem;
+            color: #2C4A52;
+            margin-bottom: 0.8rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.05);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .site-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #2C4A52, transparent);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #5F8A6E;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            margin-top: 1rem;
+        }
+        
+        /* 主内容区域 */
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+        
+        /* 左侧介绍区域 */
+        .intro-section {
+            flex: 1;
+            min-width: 300px;
+            max-width: 550px;
+        }
+        
+        .intro-text {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            text-align: justify;
+            position: relative;
+            padding: 1.5rem 1.5rem 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            border-left: 4px solid #5F8A6E;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+        }
+        
+        .intro-text p {
+            margin-bottom: 1.2rem;
+        }
+        
+        .intro-text p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .highlight {
+            color: #2C4A52;
+            font-weight: 700;
+            background: linear-gradient(transparent 70%, rgba(95, 138, 110, 0.15) 70%);
+            padding: 0 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .highlight:hover {
+            background: linear-gradient(transparent 70%, rgba(95, 138, 110, 0.3) 70%);
+        }
+        
+        /* 理由展示区域 */
+        .reasons-section {
+            margin-top: 2rem;
+        }
+        
+        .reasons-title {
+            font-size: 1.4rem;
+            color: #2C4A52;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .reasons-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #5F8A6E, transparent);
+        }
+        
+        .reasons-list {
+            list-style: none;
+        }
+        
+        .reason-item {
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .reason-item:hover {
+            transform: translateX(5px);
+            border-left-color: #5F8A6E;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .reason-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #5F8A6E, transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .reason-item:hover::before {
+            opacity: 0.3;
+        }
+        
+        .reason-number {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.3rem;
+            color: #2C4A52;
+            margin-right: 0.8rem;
+            display: inline-block;
+            min-width: 1.5em;
+        }
+        
+        .reason-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #2C4A52;
+        }
+        
+        .reason-detail {
+            display: none;
+            margin-top: 0.8rem;
+            padding-left: 2.3rem;
+            font-size: 0.95rem;
+            color: #5F8A6E;
+            line-height: 1.5;
+            font-style: italic;
+            border-left: 1px dashed rgba(95, 138, 110, 0.3);
+        }
+        
+        .reason-item.active .reason-detail {
+            display: block;
+        }
+        
+        /* 右侧倒计时区域 */
+        .countdown-section {
+            flex: 1;
+            min-width: 300px;
+            max-width: 550px;
+        }
+        
+        .countdown-title {
+            font-size: 1.7rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2C4A52;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .countdown-title::before, .countdown-title::after {
+            content: '❧';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #5F8A6E;
+            font-size: 1.2rem;
+        }
+        
+        .countdown-title::before {
+            left: -2rem;
+        }
+        
+        .countdown-title::after {
+            right: -2rem;
+        }
+        
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .countdown-number {
+            width: 90px;
+            height: 110px;
+            background: linear-gradient(145deg, #ffffff, #f5f5f0);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #2C4A52;
+            box-shadow: 
+                8px 8px 16px rgba(0, 0, 0, 0.05),
+                -8px -8px 16px rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Noto Serif SC', serif;
+        }
+        
+        .countdown-number::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #5F8A6E, #2C4A52);
+        }
+        
+        .countdown-label {
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            color: #5F8A6E;
+            letter-spacing: 0.1em;
+        }
+        
+        /* 订阅区域 */
+        .subscribe-section {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem;
+            background: rgba(255, 255, 255, 0.75);
+            border-radius: 12px;
+            backdrop-filter: blur(8px);
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(95, 138, 110, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .subscribe-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #5F8A6E, #2C4A52, #5F8A6E);
+        }
+        
+        .subscribe-title {
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+            color: #2C4A52;
+            font-weight: 700;
+        }
+        
+        .subscribe-desc {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            color: #5F8A6E;
+            line-height: 1.6;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .subscribe-form {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .email-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 1rem 1.5rem;
+            border: 1px solid rgba(95, 138, 110, 0.3);
+            border-radius: 50px;
+            font-size: 1rem;
+            font-family: 'Noto Serif SC', serif;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2C4A52;
+            transition: all 0.3s ease;
+        }
+        
+        .email-input:focus {
+            outline: none;
+            border-color: #5F8A6E;
+            box-shadow: 0 0 0 3px rgba(95, 138, 110, 0.1);
+        }
+        
+        .subscribe-btn {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #5F8A6E, #2C4A52);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.1em;
+            box-shadow: 0 4px 15px rgba(44, 74, 82, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .subscribe-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+        }
+        
+        .subscribe-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 74, 82, 0.3);
+        }
+        
+        .subscribe-btn:hover::after {
+            animation: shine 1s ease;
+        }
+        
+        @keyframes shine {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        .subscribe-btn:active {
+            transform: translateY(0);
+        }
+        
+        .form-note {
+            margin-top: 1.2rem;
+            font-size: 0.9rem;
+            color: #7A9C59;
+            font-style: italic;
+            line-height: 1.5;
+        }
+        
+        /* 对比区域 */
+        .comparison-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            border: 1px solid rgba(95, 138, 110, 0.1);
+        }
+        
+        .comparison-title {
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #2C4A52;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .comparison-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #5F8A6E, transparent);
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .comparison-item {
+            padding: 1.5rem;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .comparison-item.he {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(200, 200, 200, 0.3);
+        }
+        
+        .comparison-item.wo {
+            background: rgba(95, 138, 110, 0.08);
+            border: 1px solid rgba(95, 138, 110, 0.2);
+        }
+        
+        .comparison-label {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .comparison-label.he {
+            color: #777;
+        }
+        
+        .comparison-label.wo {
+            color: #2C4A52;
+        }
+        
+        .comparison-label::before {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.8rem;
+        }
+        
+        .comparison-label.he::before {
+            background: #ccc;
+        }
+        
+        .comparison-label.wo::before {
+            background: #5F8A6E;
+        }
+        
+        .comparison-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .comparison-text.wo {
+            color: #2C4A52;
+        }
+        
+        /* 底部区域 */
+        .footer {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            color: #5F8A6E;
+            font-size: 0.9rem;
+            position: relative;
+            margin-top: 2rem;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #5F8A6E, transparent);
+        }
+        
+        /* 水墨动画效果 */
+        .ink-animation {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            opacity: 0.03;
+            pointer-events: none;
+        }
+        
+        .ink-blot {
+            position: absolute;
+            border-radius: 50%;
+            background: #2C4A52;
+            animation: ink-spread 10s infinite ease-in-out;
+        }
+        
+        @keyframes ink-spread {
+            0%, 100% {
+                transform: scale(0.8);
+                opacity: 0.03;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.06;
+            }
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .site-title {
+                font-size: 3rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+                letter-spacing: 0.1em;
+            }
+            
+            .countdown-number {
+                width: 70px;
+                height: 90px;
+                font-size: 2.8rem;
+            }
+            
+            .countdown-container {
+                gap: 0.8rem;
+            }
+            
+            .reason-item {
+                padding: 0.8rem 1rem;
+            }
+            
+            .subscribe-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .email-input, .subscribe-btn {
+                width: 100%;
+            }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .site-title {
+                font-size: 2.5rem;
+            }
+            
+            .countdown-number {
+                width: 60px;
+                height: 80px;
+                font-size: 2.2rem;
+            }
+            
+            .intro-text {
+                font-size: 1.05rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景装饰 -->
+    <div class="bg-mountain"></div>
+    
+    <!-- 飘落的竹叶 -->
+    <div class="floating-leaves" id="leavesContainer"></div>
+    
+    <!-- 水墨动画 -->
+    <div class="ink-animation" id="inkAnimation"></div>
+    
+    <!-- 主要内容容器 -->
+    <div class="container">
+        <!-- 标题区域 -->
+        <header class="header">
+            <h1 class="site-title">菩提树</h1>
+            <div class="subtitle">数字园林 · 心灵栖所 · 雅集之地</div>
+        </header>
+        
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 左侧介绍区域 -->
+            <section class="intro-section">
+                <div class="intro-text">
+                    <p>在数字时代的<strong class="highlight">喧嚣街市</strong>之外，我们辟一方<strong class="highlight">静雅园林</strong>。</p>
+                    <p>「菩提树」非寻常社交平台，而是专为学人打造的<strong class="highlight">东方美学社区</strong>——在此，<strong class="highlight">速度让位于深度</strong>，<strong class="highlight">数量让位于质量</strong>，<strong class="highlight">社交让位于交心</strong>。</p>
+                    <p>园林将启，静待君来。</p>
+                </div>
+                
+                <!-- 理由展示区域 -->
+                <div class="reasons-section">
+                    <h3 class="reasons-title">择此园林之雅</h3>
+                    <ul class="reasons-list">
+                        <li class="reason-item" data-detail="在喧嚣的即时通讯中，沉默成为压力；在菩提树下，沉思乃是美德。">
+                            <span class="reason-number">一</span>
+                            <span class="reason-text">此处无「已读不回」之焦虑，有「沉潜往复」之从容</span>
+                            <div class="reason-detail"></div>
+                        </li>
+                        <li class="reason-item" data-detail="菩提树不追逐瞬息的热闹，而培育可流传的智慧。">
+                            <span class="reason-number">二</span>
+                            <span class="reason-text">此处无「碎片浮光」之浅谈，有「一脉深流」之雅集</span>
+                            <div class="reason-detail"></div>
+                        </li>
+                        <li class="reason-item" data-detail="真正的教育，是看见每一片叶子独特的脉络。">
+                            <span class="reason-number">三</span>
+                            <span class="reason-text">此处非「千人一面」之广场，乃「因材施教」之书院</span>
+                            <div class="reason-detail"></div>
+                        </li>
+                        <li class="reason-item" data-detail="我们不以数量论高下，而以质地分雅俗。">
+                            <span class="reason-number">四</span>
+                            <span class="reason-text">此处无「点赞狂欢」之虚浮，有「拈花会心」之真赏</span>
+                            <div class="reason-detail"></div>
+                        </li>
+                        <li class="reason-item" data-detail="智慧如茶，须静心冲泡，方得真味。">
+                            <span class="reason-number">五</span>
+                            <span class="reason-text">此处非「即时消费」之速食，乃「文火慢炖」之滋养</span>
+                            <div class="reason-detail"></div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- 右侧倒计时区域 -->
+            <section class="countdown-section">
+                <h2 class="countdown-title">开园倒计时</h2>
+                <div class="countdown-container">
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="days">00</div>
+                        <div class="countdown-label">日</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="hours">00</div>
+                        <div class="countdown-label">时</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="minutes">00</div>
+                        <div class="countdown-label">分</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="seconds">00</div>
+                        <div class="countdown-label">秒</div>
+                    </div>
+                </div>
+                
+                <!-- 对比区域 -->
+                <div class="comparison-section">
+                    <h3 class="comparison-title">街市与园林之别</h3>
+                    <div class="comparison-grid">
+                        <div class="comparison-item he">
+                            <div class="comparison-label he">寻常平台</div>
+                            <div class="comparison-text he">信息如潮，须臾不得闲；人人皆可驻足，言谈无拘，亦难免喧嚣。</div>
+                        </div>
+                        <div class="comparison-item wo">
+                            <div class="comparison-label wo">菩提园林</div>
+                            <div class="comparison-text wo">疏影横斜，清泉石上，是为专注而设的静修之地；往来皆同好，谈笑有鸿儒。</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 订阅区域 -->
+                <div class="subscribe-section">
+                    <h3 class="subscribe-title">静待君归，可愿留名？</h3>
+                    <p class="subscribe-desc">留下您的邮箱，开园之时，我们将以「尺素」相邀，奉上第一缕「墨香」。</p>
+                    <form class="subscribe-form" id="subscribeForm">
+                        <input type="email" class="email-input" placeholder="请输入您的邮箱地址" required>
+                        <button type="submit" class="subscribe-btn">静候佳音</button>
+                    </form>
+                    <p class="form-note">我们将妥善保管您的信息，仅用于开园通知与雅集邀请</p>
+                </div>
+            </section>
+        </main>
+        
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>©2026 菩提树社区 · 滋养心灵的数字园林</p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem;">本社区为非官方学术文化交流平台</p>
+        </footer>
+    </div>
+
+    <script>
+        // 设置目标日期（30天后）
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + 30);
+        
+        // 更新倒计时
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            
+            if (distance < 0) {
+                document.getElementById("days").innerHTML = "00";
+                document.getElementById("hours").innerHTML = "00";
+                document.getElementById("minutes").innerHTML = "00";
+                document.getElementById("seconds").innerHTML = "00";
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+            
+            // 添加数字变化动画
+            animateNumberChange("days", days);
+            animateNumberChange("hours", hours);
+            animateNumberChange("minutes", minutes);
+            animateNumberChange("seconds", seconds);
+        }
+        
+        // 数字变化动画效果
+        function animateNumberChange(elementId, newValue) {
+            const element = document.getElementById(elementId);
+            if (element.dataset.currentValue !== newValue.toString()) {
+                element.style.transform = "scale(1.1)";
+                setTimeout(() => {
+                    element.style.transform = "scale(1)";
+                }, 300);
+                element.dataset.currentValue = newValue.toString();
+            }
+        }
+        
+        // 创建飘落的竹叶
+        function createLeaves() {
+            const leavesContainer = document.getElementById("leavesContainer");
+            const leafCount = 12;
+            
+            for (let i = 0; i < leafCount; i++) {
+                const leaf = document.createElement("div");
+                leaf.classList.add("leaf");
+                
+                // 随机大小和位置
+                const size = Math.random() * 18 + 8;
+                leaf.style.width = `${size}px`;
+                leaf.style.height = `${size}px`;
+                leaf.style.left = `${Math.random() * 100}vw`;
+                
+                // 随机动画延迟和时长
+                leaf.style.animationDelay = `${Math.random() * 20}s`;
+                leaf.style.animationDuration = `${Math.random() * 10 + 20}s`;
+                
+                leavesContainer.appendChild(leaf);
+            }
+        }
+        
+        // 创建水墨晕染效果
+        function createInkBlots() {
+            const inkAnimation = document.getElementById("inkAnimation");
+            const blotCount = 4;
+            
+            for (let i = 0; i < blotCount; i++) {
+                const blot = document.createElement("div");
+                blot.classList.add("ink-blot");
+                
+                // 随机位置和大小
+                const size = Math.random() * 120 + 40;
+                blot.style.width = `${size}px`;
+                blot.style.height = `${size}px`;
+                blot.style.left = `${Math.random() * 100}%`;
+                blot.style.top = `${Math.random() * 100}%`;
+                
+                // 随机动画延迟
+                blot.style.animationDelay = `${Math.random() * 10}s`;
+                
+                inkAnimation.appendChild(blot);
+            }
+        }
+        
+        // 处理理由项目点击（显示/隐藏详情）
+        function setupReasonItems() {
+            const reasonItems = document.querySelectorAll('.reason-item');
+            
+            reasonItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // 获取详情文本
+                    const detailText = this.getAttribute('data-detail');
+                    const detailElement = this.querySelector('.reason-detail');
+                    
+                    // 如果已经有内容，清空
+                    if (detailElement.textContent) {
+                        detailElement.textContent = '';
+                        this.classList.remove('active');
+                    } else {
+                        // 设置详情内容
+                        detailElement.textContent = detailText;
+                        this.classList.add('active');
+                        
+                        // 关闭其他打开的详情
+                        reasonItems.forEach(otherItem => {
+                            if (otherItem !== this && otherItem.classList.contains('active')) {
+                                otherItem.querySelector('.reason-detail').textContent = '';
+                                otherItem.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            });
+        }
+        
+        // 处理订阅表单提交
+        document.getElementById('subscribeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = this.querySelector('.email-input');
+            const submitBtn = this.querySelector('.subscribe-btn');
+            
+            // 简单的表单验证
+            if (!emailInput.value || !emailInput.value.includes('@')) {
+                emailInput.style.borderColor = "#c44";
+                return;
+            }
+            
+            // 保存邮箱到本地存储（模拟）
+            localStorage.setItem('bohdi_tree_email', emailInput.value);
+            
+            // 模拟提交成功
+            const originalText = submitBtn.textContent;
+            submitBtn.innerHTML = '<span style="font-size: 1.2rem;">✓</span> 已记录';
+            submitBtn.style.background = "linear-gradient(135deg, #7A9C59, #5F8A6E)";
+            submitBtn.disabled = true;
+            emailInput.disabled = true;
+            
+            // 显示成功消息
+            setTimeout(() => {
+                const successMsg = document.createElement('p');
+                successMsg.textContent = "感谢您的雅意，开园之时将奉上第一缕墨香。";
+                successMsg.style.color = "#7A9C59";
+                successMsg.style.marginTop = "1rem";
+                successMsg.style.fontWeight = "600";
+                successMsg.style.fontStyle = "italic";
+                this.appendChild(successMsg);
+                
+                // 3秒后恢复按钮状态（供测试用）
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.style.background = "linear-gradient(135deg, #5F8A6E, #2C4A52)";
+                    submitBtn.disabled = false;
+                    emailInput.disabled = false;
+                    successMsg.remove();
+                }, 5000);
+            }, 500);
+        });
+        
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', () => {
+            createLeaves();
+            createInkBlots();
+            setupReasonItems();
+            
+            // 为标题添加淡入效果
+            const siteTitle = document.querySelector('.site-title');
+            siteTitle.style.opacity = '0';
+            siteTitle.style.transform = 'translateY(20px)';
+            siteTitle.style.transition = 'opacity 1s ease, transform 1s ease';
+            
+            setTimeout(() => {
+                siteTitle.style.opacity = '1';
+                siteTitle.style.transform = 'translateY(0)';
+            }, 300);
+            
+            // 为介绍段落添加逐行显示效果
+            const introParagraphs = document.querySelectorAll('.intro-text p');
+            introParagraphs.forEach((p, index) => {
+                p.style.opacity = '0';
+                p.style.transform = 'translateY(10px)';
+                p.style.transition = `opacity 0.8s ease ${index * 0.3}s, transform 0.8s ease ${index * 0.3}s`;
+                
+                setTimeout(() => {
+                    p.style.opacity = '1';
+                    p.style.transform = 'translateY(0)';
+                }, 500 + index * 300);
+            });
+            
+            // 初始化倒计时
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+    </script>
+</body>
+</html>
